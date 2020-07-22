@@ -99,9 +99,20 @@ const PanelPage = ({ all, pending, accepted }) => {
     );
 };
 
-PanelPage.getServerSideProps = async () => {
+// PanelPage.getServerSideProps = async () => {
+//     const { all, pending, accepted } = await getEnrolls();
+//     return { all, pending, accepted };
+// };
+
+export const getStaticProps = async () => {
     const { all, pending, accepted } = await getEnrolls();
-    return { all, pending, accepted };
+    return {
+        props: {
+            all,
+            pending,
+            accepted,
+        },
+    };
 };
 
 export default PanelPage;
