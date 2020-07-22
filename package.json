@@ -1,24 +1,24 @@
 {
-  "name": "NextApp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "node server.js",
-    "build": "next build && next export",
-    "start": "serve ./out"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "isomorphic-unfetch": "^3.0.0",
-    "mongoose": "^5.9.25",
-    "next": "^9.4.4",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.2.2",
-    "react-dom": "^16.13.1"
-  }
+    "name": "nextapp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "node server.js",
+        "build": "next build && next export",
+        "start": "serve ./out"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "isomorphic-unfetch": "^3.0.0",
+        "mongoose": "^5.9.25",
+        "next": "^9.4.4",
+        "react": "^16.13.1",
+        "react-bootstrap": "^1.2.2",
+        "react-dom": "^16.13.1"
+    }
 }

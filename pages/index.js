@@ -2,6 +2,7 @@ import Layout from "../components/Layout/Layout.js";
 import PanelWrapper from "../components/panel/panelWrapper.js";
 import fetch from "isomorphic-unfetch";
 import getEnrolls from "../components/fetch/fetch.js";
+import { API } from "../exports/config.js";
 
 const PanelPage = ({ all, pending, accepted }) => {
     const [allEnrolls, setAllEnrolls] = React.useState(all);
@@ -19,9 +20,7 @@ const PanelPage = ({ all, pending, accepted }) => {
         if (status === "all") {
             try {
                 const res = await fetch(
-                    `${process.env.API}/panel/enrolls/getall/?page=${
-                        allPage + 1
-                    }&limit=5&status=${status}`
+                    `${API}/panel/enrolls/getall/?page=${allPage + 1}&limit=5&status=${status}`
                 );
                 const data = await res.json();
                 console.log(data);
@@ -42,9 +41,7 @@ const PanelPage = ({ all, pending, accepted }) => {
         } else if (status === "pending") {
             try {
                 const res = await fetch(
-                    `${process.env.API}/panel/enrolls/getall/?page=${
-                        pendingPage + 1
-                    }&limit=5&status=${status}`
+                    `${API}/panel/enrolls/getall/?page=${pendingPage + 1}&limit=5&status=${status}`
                 );
                 const data = await res.json();
                 if (data.list) {
@@ -62,9 +59,7 @@ const PanelPage = ({ all, pending, accepted }) => {
         } else if (status === "accepted") {
             try {
                 const res = await fetch(
-                    `${process.env.API}/panel/enrolls/getall/?page=${
-                        acceptedPage + 1
-                    }&limit=5&status=${status}`
+                    `${API}/panel/enrolls/getall/?page=${acceptedPage + 1}&limit=5&status=${status}`
                 );
                 const data = await res.json();
                 if (data.list) {

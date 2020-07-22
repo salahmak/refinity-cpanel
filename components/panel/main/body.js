@@ -4,6 +4,7 @@ import Search from "./modes/search.js";
 import OptionsBar from "./optionBar/optionBar.js";
 import LoadBtn from "./loadBtn/loadBtn.js";
 import fetch from "isomorphic-unfetch";
+import { API } from "../../../exports/config.js";
 
 const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
     const [showInfo, setShowInfo] = React.useState(false);
@@ -39,7 +40,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
         if (searchStr) {
             try {
                 const res = await fetch(
-                    `${process.env.API}/panel/enrolls/search/?string=${searchStr}&filter=${searchFilter}`
+                    `${API}/panel/enrolls/search/?string=${searchStr}&filter=${searchFilter}`
                 );
                 const data = await res.json();
                 setSearchArr(data.list);
@@ -51,7 +52,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
 
     const modifyEnroll = async (action, method, id) => {
         try {
-            const res = await fetch(`${process.env.API}/panel/enrolls/${action}/?id=${id}`, {
+            const res = await fetch(`${API}/panel/enrolls/${action}/?id=${id}`, {
                 method,
                 headers: {
                     "Content-Type": "application/json",
