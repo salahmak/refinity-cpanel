@@ -1,8 +1,16 @@
-export default ({ onModeChange, mode, searchStr, setSearchStr, searchFilter, setSearchFilter }) => {
+export default ({
+    onModeChange,
+    mode,
+    searchStr,
+    setSearchStr,
+    searchFilter,
+    setSearchFilter,
+    onSearch,
+}) => {
     return (
         <>
             <div className="bar-wrapper">
-                <form className="form-inline">
+                <div className="form-inline">
                     <div className="form-group">
                         <div className="switch-wrapper">
                             <span>Search mode</span>
@@ -37,12 +45,12 @@ export default ({ onModeChange, mode, searchStr, setSearchStr, searchFilter, set
                                 <option>name</option>
                                 <option>email</option>
                             </select>
-                            <button type="button" className="btn btn-primary">
+                            <button onClick={onSearch} className="btn btn-primary">
                                 Search
                             </button>
                         </div>
                     )}
-                </form>
+                </div>
             </div>
 
             <style jsx>

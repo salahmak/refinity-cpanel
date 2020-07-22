@@ -1,6 +1,7 @@
 import Layout from "../components/Layout/Layout.js";
 import PanelWrapper from "../components/panel/panelWrapper.js";
 import fetch from "isomorphic-unfetch";
+import getEnrolls from "../components/fetch/fetch.js";
 
 const PanelPage = ({ all, pending, accepted }) => {
     const [allEnrolls, setAllEnrolls] = React.useState(all);
@@ -8,8 +9,6 @@ const PanelPage = ({ all, pending, accepted }) => {
     const [acceptedEnrolls, setAcceptedEnrolls] = React.useState(accepted);
 
     const [status, setStatus] = React.useState("all");
-
-    const [searchArr, setSearchArr] = React.useState([]);
 
     const [allPage, setAllPage] = React.useState(allEnrolls.currentPage);
     const [pendingPage, setPendingPage] = React.useState(pendingEnrolls.currentPage);
@@ -20,7 +19,7 @@ const PanelPage = ({ all, pending, accepted }) => {
         if (status === "all") {
             try {
                 const res = await fetch(
-                    `http://localhost:3001/panel/enroll/getall/?page=${
+                    `${process.env.API}/panel/enrolls/getall/?page=${
                         allPage + 1
                     }&limit=5&status=${status}`
                 );
@@ -43,7 +42,7 @@ const PanelPage = ({ all, pending, accepted }) => {
         } else if (status === "pending") {
             try {
                 const res = await fetch(
-                    `http://localhost:3001/panel/enroll/getall/?page=${
+                    `${process.env.API}/panel/enrolls/getall/?page=${
                         pendingPage + 1
                     }&limit=5&status=${status}`
                 );
@@ -63,7 +62,7 @@ const PanelPage = ({ all, pending, accepted }) => {
         } else if (status === "accepted") {
             try {
                 const res = await fetch(
-                    `http://localhost:3001/panel/enroll/getall/?page=${
+                    `${process.env.API}/panel/enrolls/getall/?page=${
                         acceptedPage + 1
                     }&limit=5&status=${status}`
                 );
@@ -83,6 +82,13 @@ const PanelPage = ({ all, pending, accepted }) => {
         }
     };
 
+    const onEnrollAction = async (params) => {
+        const { all, pending, accepted } = await getEnrolls(params[0], params[1], params[2]);
+        setAllEnrolls(all);
+        setPendingEnrolls(pending);
+        setAcceptedEnrolls(accepted);
+    };
+
     return (
         <Layout>
             <PanelWrapper
@@ -92,21 +98,14 @@ const PanelPage = ({ all, pending, accepted }) => {
                 all={allEnrolls}
                 pending={pendingEnrolls}
                 accepted={acceptedEnrolls}
+                onEnrollAction={onEnrollAction}
             />
         </Layout>
     );
 };
 
 PanelPage.getInitialProps = async () => {
-    const res = await Promise.all([
-        fetch("http://localhost:3001/panel/enroll/getall/?page=1&limit=5&status=all"),
-        fetch("http://localhost:3001/panel/enroll/getall/?page=1&limit=5&status=pending"),
-        fetch("http://localhost:3001/panel/enroll/getall/?page=1&limit=5&status=accepted"),
-    ]);
-
-    const all = await res[0].json();
-    const pending = await res[1].json();
-    const accepted = await res[2].json();
+    const { all, pending, accepted } = await getEnrolls();
     return { all, pending, accepted };
 };
 

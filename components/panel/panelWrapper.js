@@ -1,7 +1,15 @@
 import Body from "./main/body.js";
 import Side from "./main/side.js";
 
-const PanelWrapper = ({ all, pending, accepted, setStatus, status, onLoadMore }) => {
+const PanelWrapper = ({
+    all,
+    pending,
+    accepted,
+    setStatus,
+    status,
+    onLoadMore,
+    onEnrollAction,
+}) => {
     const enrolls = { all, pending, accepted };
     return (
         <>
@@ -18,6 +26,7 @@ const PanelWrapper = ({ all, pending, accepted, setStatus, status, onLoadMore })
                     status={status}
                     enrolls={enrolls}
                     onLoadMore={onLoadMore}
+                    onEnrollAction={onEnrollAction}
                     className="panel-body"
                 />
             </div>

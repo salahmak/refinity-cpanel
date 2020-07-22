@@ -1,4 +1,4 @@
-export default ({ filter, setFilter, all, pending, accepted }) => {
+export default ({ status, setStatus, all, pending, accepted }) => {
     return (
         <>
             <div className="sidenav">
@@ -6,22 +6,22 @@ export default ({ filter, setFilter, all, pending, accepted }) => {
                     <p>- Enrollments</p>
                     <div className="side-opt-wrapper">
                         <span
-                            className={filter === "all" ? "active-tab" : "opt"}
-                            onClick={() => setFilter("all")}
+                            className={status === "all" ? "active-tab" : "opt"}
+                            onClick={() => setStatus("all")}
                         >
                             {`-all   ${all}`}
                         </span>
 
                         <span
-                            className={filter === "pending" ? "active-tab" : "opt"}
-                            onClick={() => setFilter("pending")}
+                            className={status === "pending" ? "active-tab" : "opt"}
+                            onClick={() => setStatus("pending")}
                         >
                             {`-pending   ${pending}`}
                         </span>
 
                         <span
-                            className={filter === "accepted" ? "active-tab" : "opt"}
-                            onClick={() => setFilter("accepted")}
+                            className={status === "accepted" ? "active-tab" : "opt"}
+                            onClick={() => setStatus("accepted")}
                         >
                             {`-accepted   ${accepted}`}
                         </span>

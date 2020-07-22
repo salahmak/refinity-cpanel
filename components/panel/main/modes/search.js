@@ -1,32 +1,25 @@
 import Card from "../card/card.js";
 
-export default ({ enrolls, pending, accepted, openEnrollInfo, filter }) => {
+export default ({ searchArr, openEnrollInfo }) => {
     return (
         <div>
-            <span>Main content</span>
-            {filter === "all" && (
-                <div className="card-wrapper">
-                    {enrolls.map((enroll, i) => {
-                        return <Card key={i} openEnrollInfo={openEnrollInfo} enroll={enroll} />;
-                    })}
-                </div>
-            )}
-
-            {filter === "pending" && (
-                <div className="card-wrapper">
-                    {pending.map((enroll, i) => {
-                        return <Card key={i} openEnrollInfo={openEnrollInfo} enroll={enroll} />;
-                    })}
-                </div>
-            )}
-
-            {filter === "accepted" && (
-                <div className="card-wrapper">
-                    {accepted.map((enroll, i) => {
-                        return <Card key={i} openEnrollInfo={openEnrollInfo} enroll={enroll} />;
-                    })}
-                </div>
-            )}
+            <div className="card-wrapper">
+                {searchArr.map((enroll, i) => {
+                    return <Card key={i} openEnrollInfo={openEnrollInfo} enroll={enroll} />;
+                })}
+                {searchArr.length === 0 && (
+                    <div>
+                        <h3>No results found</h3>
+                    </div>
+                )}
+            </div>
+            <style jsx>{`
+                .card-wrapper {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                }
+            `}</style>
         </div>
     );
 };
