@@ -99,7 +99,7 @@ const PanelPage = ({ all, pending, accepted }) => {
     );
 };
 
-PanelPage.getInitialProps = async () => {
+PanelPage.getServerSideProps = async () => {
     const { all, pending, accepted } = await getEnrolls();
     return { all, pending, accepted };
 };
