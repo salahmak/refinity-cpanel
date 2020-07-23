@@ -4,7 +4,7 @@ import fetch from "isomorphic-unfetch";
 import getEnrolls from "../components/fetch/fetch.js";
 import { API } from "../exports/config.js";
 
-const PanelPage = ({ all, pending, accepted }) => {
+function PanelPage({ all, pending, accepted }) {
     const [allEnrolls, setAllEnrolls] = React.useState(all);
     const [pendingEnrolls, setPendingEnrolls] = React.useState(pending);
     const [acceptedEnrolls, setAcceptedEnrolls] = React.useState(accepted);
@@ -97,22 +97,11 @@ const PanelPage = ({ all, pending, accepted }) => {
             />
         </Layout>
     );
-};
+}
 
-// PanelPage.getServerSideProps = async () => {
-//     const { all, pending, accepted } = await getEnrolls();
-//     return { all, pending, accepted };
-// };
-
-export const getServerSideProps = async () => {
+PanelPage.getInitialProps = async () => {
     const { all, pending, accepted } = await getEnrolls();
-    return {
-        props: {
-            all,
-            pending,
-            accepted,
-        },
-    };
+    return { all, pending, accepted };
 };
 
 export default PanelPage;
