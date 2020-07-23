@@ -4,38 +4,18 @@ import fetch from "isomorphic-unfetch";
 import getEnrolls from "../components/fetch/fetch.js";
 import { API } from "../exports/config.js";
 
-function PanelPage() {
-    const initialState = {
-        list: [],
-        currentPage: 0,
-        totalPages: 0,
-        count: 0,
-    };
+const limit = 20;
 
-    const [limit, setLimit] = React.useState(20);
-
-    const [allEnrolls, setAllEnrolls] = React.useState({ ...initialState });
-    const [pendingEnrolls, setPendingEnrolls] = React.useState({ ...initialState });
-    const [acceptedEnrolls, setAcceptedEnrolls] = React.useState({ ...initialState });
+const PanelPage = ({ all, pending, accepted }) => {
+    const [allEnrolls, setAllEnrolls] = React.useState(all);
+    const [pendingEnrolls, setPendingEnrolls] = React.useState(pending);
+    const [acceptedEnrolls, setAcceptedEnrolls] = React.useState(accepted);
 
     const [status, setStatus] = React.useState("all");
 
-    const [allPage, setAllPage] = React.useState(1);
-    const [pendingPage, setPendingPage] = React.useState(1);
-    const [acceptedPage, setAcceptedPage] = React.useState(1);
-
-    const [loading, setLoading] = React.useState(false);
-
-    React.useEffect(() => {
-        const fetchData = async () => {
-            const { all, pending, accepted } = await getEnrolls();
-            setAllEnrolls(all);
-            setAcceptedEnrolls(accepted);
-            setPendingEnrolls(pending);
-        };
-
-        fetchData();
-    }, []);
+    const [allPage, setAllPage] = React.useState(allEnrolls.currentPage);
+    const [pendingPage, setPendingPage] = React.useState(pendingEnrolls.currentPage);
+    const [acceptedPage, setAcceptedPage] = React.useState(acceptedEnrolls.currentPage);
 
     const onLoadMore = async () => {
         console.log("clicked");
@@ -113,7 +93,7 @@ function PanelPage() {
     };
 
     return (
-        <Layout loading={loading}>
+        <Layout>
             <PanelWrapper
                 onLoadMore={onLoadMore}
                 status={status}
@@ -125,6 +105,22 @@ function PanelPage() {
             />
         </Layout>
     );
-}
+};
+
+// PanelPage.getServerSideProps = async () => {
+//     const { all, pending, accepted } = await getEnrolls();
+//     return { all, pending, accepted };
+// };
+
+export const getServerSideProps = async () => {
+    const { all, pending, accepted } = await getEnrolls(limiy, limit, limit);
+    return {
+        props: {
+            all,
+            pending,
+            accepted,
+        },
+    };
+};
 
 export default PanelPage;
