@@ -113,7 +113,7 @@ const PanelPage = ({ all, pending, accepted }) => {
 // };
 
 export const getServerSideProps = async () => {
-    const { all, pending, accepted } = await getEnrolls(limiy, limit, limit);
+    const { all, pending, accepted } = await getEnrolls(limit, limit, limit);
     return {
         props: {
             all,
