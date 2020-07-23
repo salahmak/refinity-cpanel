@@ -4,23 +4,47 @@ import fetch from "isomorphic-unfetch";
 import getEnrolls from "../components/fetch/fetch.js";
 import { API } from "../exports/config.js";
 
-function PanelPage({ all, pending, accepted }) {
-    const [allEnrolls, setAllEnrolls] = React.useState(all);
-    const [pendingEnrolls, setPendingEnrolls] = React.useState(pending);
-    const [acceptedEnrolls, setAcceptedEnrolls] = React.useState(accepted);
+function PanelPage() {
+    const initialState = {
+        list: [],
+        currentPage: 0,
+        totalPages: 0,
+        count: 0,
+    };
+
+    const [limit, setLimit] = React.useState(20);
+
+    const [allEnrolls, setAllEnrolls] = React.useState({ ...initialState });
+    const [pendingEnrolls, setPendingEnrolls] = React.useState({ ...initialState });
+    const [acceptedEnrolls, setAcceptedEnrolls] = React.useState({ ...initialState });
 
     const [status, setStatus] = React.useState("all");
 
-    const [allPage, setAllPage] = React.useState(allEnrolls.currentPage);
-    const [pendingPage, setPendingPage] = React.useState(pendingEnrolls.currentPage);
-    const [acceptedPage, setAcceptedPage] = React.useState(acceptedEnrolls.currentPage);
+    const [allPage, setAllPage] = React.useState(1);
+    const [pendingPage, setPendingPage] = React.useState(1);
+    const [acceptedPage, setAcceptedPage] = React.useState(1);
+
+    const [loading, setLoading] = React.useState(false);
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const { all, pending, accepted } = await getEnrolls();
+            setAllEnrolls(all);
+            setAcceptedEnrolls(accepted);
+            setPendingEnrolls(pending);
+        };
+
+        fetchData();
+    }, []);
 
     const onLoadMore = async () => {
         console.log("clicked");
         if (status === "all") {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/getall/?page=${allPage + 1}&limit=5&status=${status}`
+                    `${API}/panel/enrolls/getall/?page=${
+                        allPage + 1
+                    }&limit=${limit}&status=${status}`
                 );
                 const data = await res.json();
                 console.log(data);
@@ -41,7 +65,9 @@ function PanelPage({ all, pending, accepted }) {
         } else if (status === "pending") {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/getall/?page=${pendingPage + 1}&limit=5&status=${status}`
+                    `${API}/panel/enrolls/getall/?page=${
+                        pendingPage + 1
+                    }&limit=${limit}&status=${status}`
                 );
                 const data = await res.json();
                 if (data.list) {
@@ -59,7 +85,9 @@ function PanelPage({ all, pending, accepted }) {
         } else if (status === "accepted") {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/getall/?page=${acceptedPage + 1}&limit=5&status=${status}`
+                    `${API}/panel/enrolls/getall/?page=${
+                        acceptedPage + 1
+                    }&limit=${limit}&status=${status}`
                 );
                 const data = await res.json();
                 if (data.list) {
@@ -85,7 +113,7 @@ function PanelPage({ all, pending, accepted }) {
     };
 
     return (
-        <Layout>
+        <Layout loading={loading}>
             <PanelWrapper
                 onLoadMore={onLoadMore}
                 status={status}
@@ -98,10 +126,5 @@ function PanelPage({ all, pending, accepted }) {
         </Layout>
     );
 }
-
-PanelPage.getInitialProps = async () => {
-    const { all, pending, accepted } = await getEnrolls();
-    return { all, pending, accepted };
-};
 
 export default PanelPage;

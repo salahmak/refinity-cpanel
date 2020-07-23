@@ -12,7 +12,6 @@ app.prepare()
         const server = express();
         server.use(express.json());
         server.use(express.urlencoded({ extended: false }));
-        server.use(express.static("static"));
         //server.use('/api', router)
 
         server.get("*", (req, res) => {

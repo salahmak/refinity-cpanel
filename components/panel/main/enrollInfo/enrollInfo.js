@@ -10,7 +10,7 @@ export default ({ enroll, close, show, modifyEnroll }) => {
                 <Modal.Body>
                     <ul>
                         <li>{`id: ${enroll.id}`}</li>
-                        <li>{`date: ${enroll.date}`}</li>
+                        <li>{`date: ${Date(enroll.date)}`}</li>
                         <li>{`name: ${enroll.name}`}</li>
                         <li>{`email: ${enroll.email}`}</li>
                         <li>{`status: ${enroll.status}`}</li>
