@@ -72,7 +72,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
                     paramsArr = [
                         enrolls.all.list.length,
                         enrolls.pending.list.length - 1,
-                        enrolls.accepted.list.length,
+                        enrolls.accepted.list.length + 1,
                     ];
                 }
                 onEnrollAction(paramsArr);
