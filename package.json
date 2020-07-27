@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "next",
         "build": "next build",
-        "start": "serve ./out"
+        "start": "next start"
     },
     "keywords": [],
     "author": "",
