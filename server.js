@@ -9,13 +9,17 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
     const server = express();
 
-    // server.get("/a", (req, res) => {
-    //     return app.render(req, res, "/a", req.query);
-    // });
+    server.get("/login", (req, res) => {
+        return app.render(req, res, "/login", req.query);
+    });
 
-    // server.get("/b", (req, res) => {
-    //     return app.render(req, res, "/b", req.query);
-    // });
+    server.get("/register", (req, res) => {
+        return app.render(req, res, "/register", req.query);
+    });
+
+    server.get("/panel", (req, res) => {
+        return app.render(req, res, "/panel", req.query);
+    });
 
     server.all("*", (req, res) => {
         return handle(req, res);
