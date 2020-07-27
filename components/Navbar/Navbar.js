@@ -1,10 +1,21 @@
 import Link from "next/link";
+import { Cookies } from "react-cookie";
+import { useRouter } from "next/router";
+const cookies = new Cookies();
 
-export default ({ authenticated, name }) => {
+export default ({ authenticated, name, profile }) => {
+    const Router = useRouter();
+
+    const onSignOut = () => {
+        cookies.remove("token");
+        Router.push("/login");
+    };
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a className="navbar-brand">{`Welcome to the panel, ${name}`}</a>
+                {authenticated && name && (
+                    <span className="navbar-brand">{`Welcome to the panel, ${name}`}</span>
+                )}
 
                 <button
                     className="navbar-toggler"
@@ -21,7 +32,26 @@ export default ({ authenticated, name }) => {
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <div className="mr-auto"></div>
                     <div className="my-2 my-lg-0">
-                        {!authenticated && (
+                        {authenticated ? (
+                            <>
+                                {profile ? (
+                                    <Link href="/panel">
+                                        <button className="btn btn-secondary my-2 my-sm-0 m-1">
+                                            panel
+                                        </button>
+                                    </Link>
+                                ) : (
+                                    <Link href="/panel/profile">
+                                        <button className="btn btn-secondary my-2 my-sm-0 m-1">
+                                            Profile
+                                        </button>
+                                    </Link>
+                                )}
+                                <button onClick={onSignOut} className="btn btn-secondary my-2 my-sm-0">
+                                    sign out
+                                </button>
+                            </>
+                        ) : (
                             <>
                                 <Link href="/login">
                                     <button className="btn btn-secondary my-2 my-sm-0">login</button>

@@ -1,13 +1,13 @@
 import { Cookies } from "react-cookie";
 import { API } from "../exports/config.js";
-const cookies = new Cookies();
+import cookies from "next-cookies";
+const client_cookies = new Cookies();
 
 const auth = async (ctx) => {
     let token;
 
     if (ctx.req) {
-        token = ctx.req.headers.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-
+        token = cookies(ctx).token;
         if (!token)
             return {
                 user: null,
@@ -15,7 +15,7 @@ const auth = async (ctx) => {
                 authenticated: false,
             };
     } else {
-        token = cookies.get("token");
+        token = client_cookies.get("token");
         if (!token)
             return {
                 user: null,

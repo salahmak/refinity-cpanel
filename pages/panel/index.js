@@ -1,10 +1,10 @@
-import Layout from "../components/Layout/Layout.js";
-import PanelWrapper from "../components/panel/panelWrapper.js";
+import Layout from "../../components/Layout/Layout.js";
+import PanelWrapper from "../../components/panel/panelWrapper.js";
 import fetch from "isomorphic-unfetch";
-import getEnrolls from "../components/fetch/fetch.js";
-import { API } from "../exports/config.js";
-import { useState, useEffect } from "react";
-import { auth } from "../utils/auth.js";
+import getEnrolls from "../../components/fetch/fetch.js";
+import { API } from "../../exports/config.js";
+import { useState } from "react";
+import { auth } from "../../utils/auth.js";
 import Router from "next/router";
 
 const limit = 20;
@@ -19,10 +19,6 @@ const PanelPage = ({ all, pending, accepted, user, authenticated }) => {
     const [allPage, setAllPage] = useState(allEnrolls.currentPage);
     const [pendingPage, setPendingPage] = useState(pendingEnrolls.currentPage);
     const [acceptedPage, setAcceptedPage] = useState(acceptedEnrolls.currentPage);
-
-    useEffect(() => {
-        console.log(user);
-    }, []);
 
     const onLoadMore = async () => {
         console.log("clicked");
