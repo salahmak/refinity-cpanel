@@ -63,11 +63,19 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
                 //setting the params array to execure the enroll action function for a reGET
                 let paramsArr;
                 if (action === "delete") {
-                    paramsArr = [
-                        enrolls.all.list.length - 1,
-                        enrolls.pending.list.length - 1,
-                        enrolls.accepted.list.length - 1,
-                    ];
+                    if (data.enroll.status === "pending") {
+                        paramsArr = [
+                            enrolls.all.list.length - 1,
+                            enrolls.pending.list.length - 1,
+                            enrolls.accepted.list.length,
+                        ];
+                    } else {
+                        paramsArr = [
+                            enrolls.all.list.length - 1,
+                            enrolls.pending.list.length,
+                            enrolls.accepted.list.length - 1,
+                        ];
+                    }
                 } else {
                     paramsArr = [
                         enrolls.all.list.length,

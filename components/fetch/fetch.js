@@ -1,5 +1,6 @@
 import fetch from "isomorphic-unfetch";
 import { API } from "../../exports/config.js";
+
 export default async (lim1 = 20, lim2 = 20, lim3 = 20) => {
     const res = await Promise.all([
         fetch(`${API}/panel/enrolls/getall/?page=1&limit=${lim1}&status=all`),
