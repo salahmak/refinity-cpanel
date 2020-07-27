@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Cookies } from "react-cookie";
-import API from "../exports/config.js";
+import { API } from "../exports/config.js";
 
 const cookies = new Cookies();
 // This function takes a component...

@@ -1,5 +1,5 @@
 import { Cookies } from "react-cookie";
-import API from "../exports/config.js";
+import { API } from "../exports/config.js";
 const cookies = new Cookies();
 
 const auth = async (ctx) => {
