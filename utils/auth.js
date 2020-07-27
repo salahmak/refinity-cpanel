@@ -1,4 +1,5 @@
 import { Cookies } from "react-cookie";
+import API from "../exports/config.js";
 const cookies = new Cookies();
 
 const auth = async (ctx) => {
@@ -24,7 +25,7 @@ const auth = async (ctx) => {
     }
 
     try {
-        const res = await fetch("http://localhost:3001/auth/getUser", {
+        const res = await fetch(`${API}/auth/getUser`, {
             headers: {
                 "auth-token": token,
             },

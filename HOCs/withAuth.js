@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Cookies } from "react-cookie";
+import API from "../exports/config.js";
 
 const cookies = new Cookies();
 // This function takes a component...
@@ -22,7 +23,7 @@ function WithAuth(WrappedComponent, type) {
 
             const body = type === "login" ? { email, password } : { username, email, password };
             console.log(body);
-            const res = await fetch(`http://localhost:3001/auth/${type}`, {
+            const res = await fetch(`${API}/auth/${type}`, {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",
