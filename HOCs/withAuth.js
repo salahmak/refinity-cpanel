@@ -4,9 +4,7 @@ import { Cookies } from "react-cookie";
 import { API } from "../exports/config.js";
 
 const cookies = new Cookies();
-// This function takes a component...
 function WithAuth(WrappedComponent, type) {
-    // ...and returns another component...
     return (props) => {
         const Router = useRouter();
         const [username, setUsername] = useState("");
@@ -21,7 +19,7 @@ function WithAuth(WrappedComponent, type) {
 
             const body = type === "login" ? { email, password } : { username, email, password };
 
-            const res = await fetch(`${API}/auth/${type}`, {
+            const res = await fetch(`/api/auth?type=${type}`, {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",
@@ -32,6 +30,7 @@ function WithAuth(WrappedComponent, type) {
 
             if (res.ok) {
                 Router.push("/panel");
+                console.log(await res.json());
             }
         };
 

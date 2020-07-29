@@ -6,7 +6,7 @@ import LoadBtn from "./loadBtn/loadBtn.js";
 import fetch from "isomorphic-unfetch";
 import { API } from "../../../exports/config.js";
 
-const Body = ({ enrolls, status, onLoadMore, onEnrollAction, Cookie }) => {
+const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
     const [showInfo, setShowInfo] = React.useState(false);
 
     const [currentEnroll, setCurrentEnroll] = React.useState({});
@@ -44,7 +44,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, Cookie }) => {
                     {
                         credentials: "include",
                         headers: {
-                            Cookie,
+                            "auth-token": token,
                         },
                     }
                 );
@@ -61,8 +61,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, Cookie }) => {
             const res = await fetch(`${API}/panel/enrolls/${action}/?id=${id}`, {
                 method,
                 headers: {
-                    "Content-Type": "application/json",
-                    Cookie,
+                    "auth-token": token,
                 },
 
                 credentials: "include",

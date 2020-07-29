@@ -1,11 +1,13 @@
 import { API } from "../exports/config.js";
+import cookies from "next-cookies";
 
 const auth = async (ctx) => {
+    const { token } = cookies(ctx);
     try {
         const res = await fetch(`${API}/auth/getUser`, {
             credentials: "include",
             headers: {
-                Cookie: ctx.req.headers.cookie,
+                "auth-token": token,
             },
         });
 
@@ -21,7 +23,7 @@ const auth = async (ctx) => {
             user,
             error: null,
             authenticated: true,
-            Cookie: ctx.req.headers.cookie,
+            token,
         };
     } catch (e) {
         return {

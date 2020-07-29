@@ -1,11 +1,11 @@
 import fetch from "isomorphic-unfetch";
 import { API } from "../../exports/config.js";
 
-export default async (lim1 = 20, lim2 = 20, lim3 = 20, Cookie) => {
+export default async (lim1 = 20, lim2 = 20, lim3 = 20, token) => {
     const options = {
         credentials: "include",
         headers: {
-            Cookie,
+            "auth-token": token,
         },
     };
 

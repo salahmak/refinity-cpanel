@@ -9,7 +9,7 @@ import Router from "next/router";
 
 const limit = 3;
 
-const PanelPage = ({ all, pending, accepted, user, authenticated, Cookie }) => {
+const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
     const [allEnrolls, setAllEnrolls] = useState(all);
     const [pendingEnrolls, setPendingEnrolls] = useState(pending);
     const [acceptedEnrolls, setAcceptedEnrolls] = useState(accepted);
@@ -26,9 +26,8 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, Cookie }) => {
                 const res = await fetch(
                     `${API}/panel/enrolls/getall/?page=${allPage + 1}&limit=${limit}&status=${status}`,
                     {
-                        credentials: "include",
                         headers: {
-                            Cookie,
+                            "auth-token": token,
                         },
                     }
                 );
@@ -57,7 +56,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, Cookie }) => {
                     {
                         credentials: "include",
                         headers: {
-                            Cookie,
+                            "auth-token": token,
                         },
                     }
                 );
@@ -83,7 +82,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, Cookie }) => {
                     {
                         credentials: "include",
                         headers: {
-                            Cookie,
+                            "auth-token": token,
                         },
                     }
                 );
@@ -104,7 +103,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, Cookie }) => {
     };
 
     const onEnrollAction = async (params) => {
-        const { all, pending, accepted } = await getEnrolls(params[0], params[1], params[2], Cookie);
+        const { all, pending, accepted } = await getEnrolls(params[0], params[1], params[2], token);
         setAllEnrolls(all);
         setPendingEnrolls(pending);
         setAcceptedEnrolls(accepted);
@@ -120,16 +119,16 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, Cookie }) => {
                 pending={pendingEnrolls}
                 accepted={acceptedEnrolls}
                 onEnrollAction={onEnrollAction}
-                Cookie={Cookie}
+                token={token}
             />
         </Layout>
     );
 };
 
 export const getServerSideProps = async (ctx) => {
-    const { user, error, authenticated, Cookie } = await auth(ctx);
+    const { user, error, authenticated, token } = await auth(ctx);
     if (user && !error) {
-        const { all, pending, accepted } = await getEnrolls(limit, limit, limit, Cookie);
+        const { all, pending, accepted } = await getEnrolls(limit, limit, limit, token);
         return {
             props: {
                 all,
@@ -137,7 +136,7 @@ export const getServerSideProps = async (ctx) => {
                 accepted,
                 user,
                 authenticated,
-                Cookie,
+                token,
             },
         };
     } else {

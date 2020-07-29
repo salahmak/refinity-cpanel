@@ -6,7 +6,7 @@ export default ({ authenticated, name, profile }) => {
     const Router = useRouter();
 
     const onSignOut = async () => {
-        const res = await fetch(`${API}/auth/signout`, {
+        const res = await fetch(`/api/signout`, {
             credentials: "include",
         });
         if (res.ok) {
