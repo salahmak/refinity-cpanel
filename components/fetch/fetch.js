@@ -1,5 +1,4 @@
 import fetch from "isomorphic-unfetch";
-import axios from "axios";
 import { API } from "../../exports/config.js";
 
 export default async (lim1 = 20, lim2 = 20, lim3 = 20, Cookie) => {
