@@ -7,9 +7,9 @@ import { useState } from "react";
 import { auth } from "../../utils/auth.js";
 import Router from "next/router";
 
-const limit = 20;
+const limit = 3;
 
-const PanelPage = ({ all, pending, accepted, user, authenticated }) => {
+const PanelPage = ({ all, pending, accepted, user, authenticated, Cookie }) => {
     const [allEnrolls, setAllEnrolls] = useState(all);
     const [pendingEnrolls, setPendingEnrolls] = useState(pending);
     const [acceptedEnrolls, setAcceptedEnrolls] = useState(accepted);
@@ -21,11 +21,16 @@ const PanelPage = ({ all, pending, accepted, user, authenticated }) => {
     const [acceptedPage, setAcceptedPage] = useState(acceptedEnrolls.currentPage);
 
     const onLoadMore = async () => {
-        console.log("clicked");
         if (status === "all") {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/getall/?page=${allPage + 1}&limit=${limit}&status=${status}`
+                    `${API}/panel/enrolls/getall/?page=${allPage + 1}&limit=${limit}&status=${status}`,
+                    {
+                        credentials: "include",
+                        headers: {
+                            Cookie,
+                        },
+                    }
                 );
                 const data = await res.json();
                 console.log(data);
@@ -48,7 +53,13 @@ const PanelPage = ({ all, pending, accepted, user, authenticated }) => {
                 const res = await fetch(
                     `${API}/panel/enrolls/getall/?page=${
                         pendingPage + 1
-                    }&limit=${limit}&status=${status}`
+                    }&limit=${limit}&status=${status}`,
+                    {
+                        credentials: "include",
+                        headers: {
+                            Cookie,
+                        },
+                    }
                 );
                 const data = await res.json();
                 if (data.list) {
@@ -68,7 +79,13 @@ const PanelPage = ({ all, pending, accepted, user, authenticated }) => {
                 const res = await fetch(
                     `${API}/panel/enrolls/getall/?page=${
                         acceptedPage + 1
-                    }&limit=${limit}&status=${status}`
+                    }&limit=${limit}&status=${status}`,
+                    {
+                        credentials: "include",
+                        headers: {
+                            Cookie,
+                        },
+                    }
                 );
                 const data = await res.json();
                 if (data.list) {
@@ -87,7 +104,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated }) => {
     };
 
     const onEnrollAction = async (params) => {
-        const { all, pending, accepted } = await getEnrolls(params[0], params[1], params[2]);
+        const { all, pending, accepted } = await getEnrolls(params[0], params[1], params[2], Cookie);
         setAllEnrolls(all);
         setPendingEnrolls(pending);
         setAcceptedEnrolls(accepted);
@@ -103,15 +120,16 @@ const PanelPage = ({ all, pending, accepted, user, authenticated }) => {
                 pending={pendingEnrolls}
                 accepted={acceptedEnrolls}
                 onEnrollAction={onEnrollAction}
+                Cookie={Cookie}
             />
         </Layout>
     );
 };
 
 export const getServerSideProps = async (ctx) => {
-    const { user, error, authenticated } = await auth(ctx);
+    const { user, error, authenticated, Cookie } = await auth(ctx);
     if (user && !error) {
-        const { all, pending, accepted } = await getEnrolls(limit, limit, limit);
+        const { all, pending, accepted } = await getEnrolls(limit, limit, limit, Cookie);
         return {
             props: {
                 all,
@@ -119,6 +137,7 @@ export const getServerSideProps = async (ctx) => {
                 accepted,
                 user,
                 authenticated,
+                Cookie,
             },
         };
     } else {

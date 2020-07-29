@@ -1,33 +1,11 @@
-import { Cookies } from "react-cookie";
 import { API } from "../exports/config.js";
-import cookies from "next-cookies";
-const client_cookies = new Cookies();
 
 const auth = async (ctx) => {
-    let token;
-
-    if (ctx.req) {
-        token = cookies(ctx).token;
-        if (!token)
-            return {
-                user: null,
-                error: "token not found",
-                authenticated: false,
-            };
-    } else {
-        token = client_cookies.get("token");
-        if (!token)
-            return {
-                user: null,
-                error: "token not found",
-                authenticated: false,
-            };
-    }
-
     try {
         const res = await fetch(`${API}/auth/getUser`, {
+            credentials: "include",
             headers: {
-                "auth-token": token,
+                Cookie: ctx.req.headers.cookie,
             },
         });
 
@@ -43,6 +21,7 @@ const auth = async (ctx) => {
             user,
             error: null,
             authenticated: true,
+            Cookie: ctx.req.headers.cookie,
         };
     } catch (e) {
         return {

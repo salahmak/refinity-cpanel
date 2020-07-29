@@ -1,14 +1,17 @@
 import Link from "next/link";
-import { Cookies } from "react-cookie";
 import { useRouter } from "next/router";
-const cookies = new Cookies();
+import { API } from "../../exports/config.js";
 
 export default ({ authenticated, name, profile }) => {
     const Router = useRouter();
 
-    const onSignOut = () => {
-        cookies.remove("token");
-        Router.push("/login");
+    const onSignOut = async () => {
+        const res = await fetch(`${API}/auth/signout`, {
+            credentials: "include",
+        });
+        if (res.ok) {
+            Router.push("/login");
+        }
     };
     return (
         <>

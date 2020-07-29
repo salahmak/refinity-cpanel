@@ -14,26 +14,23 @@ function WithAuth(WrappedComponent, type) {
         const [password, setPassword] = useState("");
 
         const onSubmit = async (e) => {
-            console.log("clickzed");
             e.preventDefault();
-            console.log("prevented");
 
             const valid = ["register", "login"];
             if (!valid.includes(type)) return;
 
             const body = type === "login" ? { email, password } : { username, email, password };
-            console.log(body);
+
             const res = await fetch(`${API}/auth/${type}`, {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
                 body: JSON.stringify(body),
             });
 
             if (res.ok) {
-                const token = await res.json();
-                cookies.set("token", token);
                 Router.push("/panel");
             }
         };

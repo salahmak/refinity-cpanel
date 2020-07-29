@@ -9,6 +9,7 @@ const PanelWrapper = ({
     status,
     onLoadMore,
     onEnrollAction,
+    Cookie,
 }) => {
     const enrolls = { all, pending, accepted };
     return (
@@ -28,6 +29,7 @@ const PanelWrapper = ({
                     onLoadMore={onLoadMore}
                     onEnrollAction={onEnrollAction}
                     className="panel-body"
+                    Cookie={Cookie}
                 />
             </div>
             <style jsx>{`

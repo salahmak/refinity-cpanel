@@ -6,7 +6,7 @@ import LoadBtn from "./loadBtn/loadBtn.js";
 import fetch from "isomorphic-unfetch";
 import { API } from "../../../exports/config.js";
 
-const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
+const Body = ({ enrolls, status, onLoadMore, onEnrollAction, Cookie }) => {
     const [showInfo, setShowInfo] = React.useState(false);
 
     const [currentEnroll, setCurrentEnroll] = React.useState({});
@@ -40,7 +40,13 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
         if (searchStr) {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/search/?string=${searchStr}&filter=${searchFilter}`
+                    `${API}/panel/enrolls/search/?string=${searchStr}&filter=${searchFilter}`,
+                    {
+                        credentials: "include",
+                        headers: {
+                            Cookie,
+                        },
+                    }
                 );
                 const data = await res.json();
                 setSearchArr(data.list);
@@ -56,7 +62,10 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
                 method,
                 headers: {
                     "Content-Type": "application/json",
+                    Cookie,
                 },
+
+                credentials: "include",
             });
             const data = await res.json();
             if (data.status === "success") {
@@ -114,9 +123,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction }) => {
                     <Browse openEnrollInfo={openEnrollInfo} enrolls={enrolls} status={status} />
                 )}
 
-                {mode === "search" && (
-                    <Search openEnrollInfo={openEnrollInfo} searchArr={searchArr} />
-                )}
+                {mode === "search" && <Search openEnrollInfo={openEnrollInfo} searchArr={searchArr} />}
 
                 {enrolls[status].currentPage !== enrolls[status].totalPages &&
                     enrolls[status].totalPages !== 0 &&
