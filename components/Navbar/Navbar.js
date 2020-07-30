@@ -1,18 +1,7 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { API } from "../../exports/config.js";
+import onSignOut from "../../utils/signout.js";
 
 export default ({ authenticated, name, profile }) => {
-    const Router = useRouter();
-
-    const onSignOut = async () => {
-        const res = await fetch(`/api/signout`, {
-            credentials: "include",
-        });
-        if (res.ok) {
-            Router.push("/login");
-        }
-    };
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">

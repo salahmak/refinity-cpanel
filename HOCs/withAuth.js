@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Cookies } from "react-cookie";
-import { API } from "../exports/config.js";
 
 const cookies = new Cookies();
 function WithAuth(WrappedComponent, type) {
@@ -30,7 +29,6 @@ function WithAuth(WrappedComponent, type) {
 
             if (res.ok) {
                 Router.push("/panel");
-                console.log(await res.json());
             }
         };
 

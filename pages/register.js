@@ -1,7 +1,7 @@
 import Layout from "../components/Layout/Layout.js";
 import Register from "../components/auth/register/register.js";
 import Router from "next/router";
-import { auth } from "../utils/auth.js";
+import auth from "../utils/auth.js";
 import WithAuth from "../HOCs/withAuth.js";
 
 const RegisterPage = ({ onSubmit, setUsername, setEmail, setPassword }) => {

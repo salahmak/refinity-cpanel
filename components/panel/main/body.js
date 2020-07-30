@@ -42,7 +42,6 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
                 const res = await fetch(
                     `${API}/panel/enrolls/search/?string=${searchStr}&filter=${searchFilter}`,
                     {
-                        credentials: "include",
                         headers: {
                             "auth-token": token,
                         },
@@ -63,36 +62,11 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
                 headers: {
                     "auth-token": token,
                 },
-
-                credentials: "include",
             });
             const data = await res.json();
             if (data.status === "success") {
-                //setting the params array to execure the enroll action function for a reGET
-                let paramsArr;
-                if (action === "delete") {
-                    if (data.enroll.status === "pending") {
-                        paramsArr = [
-                            enrolls.all.list.length - 1,
-                            enrolls.pending.list.length - 1,
-                            enrolls.accepted.list.length,
-                        ];
-                    } else {
-                        paramsArr = [
-                            enrolls.all.list.length - 1,
-                            enrolls.pending.list.length,
-                            enrolls.accepted.list.length - 1,
-                        ];
-                    }
-                } else {
-                    paramsArr = [
-                        enrolls.all.list.length,
-                        enrolls.pending.list.length - 1,
-                        enrolls.accepted.list.length + 1,
-                    ];
-                }
-                onEnrollAction(paramsArr);
-
+                onEnrollAction();
+                if (mode === "search") onSearch();
                 //update states
                 setShowInfo(false);
                 setCurrentEnroll({});

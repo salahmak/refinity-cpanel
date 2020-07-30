@@ -1,18 +1,17 @@
 import fetch from "isomorphic-unfetch";
 import { API } from "../../exports/config.js";
 
-export default async (lim1 = 20, lim2 = 20, lim3 = 20, token) => {
+export default async (limits, token) => {
     const options = {
-        credentials: "include",
         headers: {
             "auth-token": token,
         },
     };
 
     const res = await Promise.all([
-        fetch(`${API}/panel/enrolls/getall/?page=1&limit=${lim1}&status=all`, options),
-        fetch(`${API}/panel/enrolls/getall/?page=1&limit=${lim2}&status=pending`, options),
-        fetch(`${API}/panel/enrolls/getall/?page=1&limit=${lim3}&status=accepted`, options),
+        fetch(`${API}/panel/enrolls/getall/?page=1&limit=${limits[0]}&status=all`, options),
+        fetch(`${API}/panel/enrolls/getall/?page=1&limit=${limits[1]}&status=pending`, options),
+        fetch(`${API}/panel/enrolls/getall/?page=1&limit=${limits[2]}&status=accepted`, options),
     ]);
 
     const all = await res[0].json();

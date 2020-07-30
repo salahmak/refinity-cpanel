@@ -4,10 +4,10 @@ import fetch from "isomorphic-unfetch";
 import getEnrolls from "../../components/fetch/fetch.js";
 import { API } from "../../exports/config.js";
 import { useState } from "react";
-import { auth } from "../../utils/auth.js";
+import auth from "../../utils/auth.js";
 import Router from "next/router";
 
-const limit = 3;
+const limits = [5, 25, 10];
 
 const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
     const [allEnrolls, setAllEnrolls] = useState(all);
@@ -24,7 +24,9 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
         if (status === "all") {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/getall/?page=${allPage + 1}&limit=${limit}&status=${status}`,
+                    `${API}/panel/enrolls/getall/?page=${allPage + 1}&limit=${
+                        limits[0]
+                    }&status=${status}`,
                     {
                         headers: {
                             "auth-token": token,
@@ -50,11 +52,10 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
         } else if (status === "pending") {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/getall/?page=${
-                        pendingPage + 1
-                    }&limit=${limit}&status=${status}`,
+                    `${API}/panel/enrolls/getall/?page=${pendingPage + 1}&limit=${
+                        limits[1]
+                    }&status=${status}`,
                     {
-                        credentials: "include",
                         headers: {
                             "auth-token": token,
                         },
@@ -76,11 +77,10 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
         } else if (status === "accepted") {
             try {
                 const res = await fetch(
-                    `${API}/panel/enrolls/getall/?page=${
-                        acceptedPage + 1
-                    }&limit=${limit}&status=${status}`,
+                    `${API}/panel/enrolls/getall/?page=${acceptedPage + 1}&limit=${
+                        limits[2]
+                    }&status=${status}`,
                     {
-                        credentials: "include",
                         headers: {
                             "auth-token": token,
                         },
@@ -103,7 +103,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
     };
 
     const onEnrollAction = async (params) => {
-        const { all, pending, accepted } = await getEnrolls(params[0], params[1], params[2], token);
+        const { all, pending, accepted } = await getEnrolls(limits, token);
         setAllEnrolls(all);
         setPendingEnrolls(pending);
         setAcceptedEnrolls(accepted);
@@ -128,7 +128,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
 export const getServerSideProps = async (ctx) => {
     const { user, error, authenticated, token } = await auth(ctx);
     if (user && !error) {
-        const { all, pending, accepted } = await getEnrolls(limit, limit, limit, token);
+        const { all, pending, accepted } = await getEnrolls(limits, token);
         return {
             props: {
                 all,

@@ -14,7 +14,7 @@ export default async (req, res) => {
 
 	const options = {
 		httpOnly: true,
-		maxAge: 432000000,
+		maxAge: 432000,
 		secure: process.env.NODE_ENV === "production",
 		path: "/",
 		sameSite: true,
