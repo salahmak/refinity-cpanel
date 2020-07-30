@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Cookies } from "react-cookie";
 
-const cookies = new Cookies();
 function WithAuth(WrappedComponent, type) {
     return (props) => {
         const Router = useRouter();

@@ -1,5 +1,5 @@
 import Layout from "../../components/Layout/Layout.js";
-import auth from "../../utils/auth.js";
+import { auth } from "../../utils/auth.js";
 import Router from "next/router";
 
 export default ({ user, authenticated }) => {

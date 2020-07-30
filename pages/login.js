@@ -1,7 +1,7 @@
 import Layout from "../components/Layout/Layout.js";
 import Login from "../components/auth/login/login.js";
 import Router from "next/router";
-import auth from "../utils/auth.js";
+import { auth } from "../utils/auth.js";
 import WithAuth from "../HOCs/withAuth.js";
 
 const LoginPage = ({ onSubmit, setEmail, setPassword }) => {

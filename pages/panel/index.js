@@ -4,7 +4,7 @@ import fetch from "isomorphic-unfetch";
 import getEnrolls from "../../components/fetch/fetch.js";
 import { API } from "../../exports/config.js";
 import { useState } from "react";
-import auth from "../../utils/auth.js";
+import { auth } from "../../utils/auth.js";
 import Router from "next/router";
 
 const limits = [5, 25, 10];
