@@ -4,7 +4,7 @@ const Layout = ({ name, authenticated, profile, children }) => {
     return (
         <>
             <Head>
-                <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css" />
+                <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css" />
 
                 <script
                     src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

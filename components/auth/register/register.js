@@ -9,7 +9,7 @@ export default ({ onSubmit, setUsername, setEmail, setPassword }) => {
                             Username
                         </label>
                         <input
-                            type="email"
+                            type="text"
                             onChange={(e) => setUsername(e.target.value)}
                             id="inputUsername"
                             name="username"
@@ -48,11 +48,7 @@ export default ({ onSubmit, setUsername, setEmail, setPassword }) => {
                             required=""
                         />
                     </div>
-                    <button
-                        onClick={onSubmit}
-                        className="btn btn-lg btn-primary btn-block"
-                        type="submit"
-                    >
+                    <button className="btn btn-lg btn-primary btn-block" type="submit">
                         Register
                     </button>
                 </form>

@@ -11,6 +11,7 @@ export default ({ enroll, openEnrollInfo }) => {
                         data-toggle="modal"
                         data-target="#exampleModal"
                         onClick={() => openEnrollInfo(enroll)}
+                        className="btn btn-primary"
                     >
                         more info
                     </button>
@@ -30,11 +31,13 @@ export default ({ enroll, openEnrollInfo }) => {
                 }
 
                 .card .text > button {
-                    background: gray;
-                    border: 0;
-                    color: white;
                     padding: 10px;
                     width: 100%;
+                }
+                @media screen and (max-width: 768px) {
+                    .card {
+                        flex: auto;
+                    }
                 }
             `}</style>
         </>

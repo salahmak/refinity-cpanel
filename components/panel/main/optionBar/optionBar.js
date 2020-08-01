@@ -9,7 +9,7 @@ export default ({
 }) => {
     return (
         <>
-            <div className="bar-wrapper">
+            <div className="bar-wrapper bg-warning">
                 <div className="form-inline">
                     <div className="form-group">
                         <div className="switch-wrapper">
@@ -21,10 +21,7 @@ export default ({
                                     id="customSwitch1"
                                     onChange={onModeChange}
                                 />
-                                <label
-                                    className="custom-control-label"
-                                    htmlFor="customSwitch1"
-                                ></label>
+                                <label className="custom-control-label" htmlFor="customSwitch1"></label>
                             </div>
                         </div>
                     </div>

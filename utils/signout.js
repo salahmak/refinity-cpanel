@@ -1,5 +1,5 @@
 import Router from "next/router";
-module.exports = async () => {
+module.exports = async (query) => {
 	const res = await fetch(`/api/signout`, {
 		credentials: "include",
 	});

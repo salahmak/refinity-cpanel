@@ -28,30 +28,24 @@ export default ({ authenticated, name, profile }) => {
                             <>
                                 {profile ? (
                                     <Link href="/panel">
-                                        <button className="btn btn-secondary my-2 my-sm-0 m-1">
-                                            panel
-                                        </button>
+                                        <button className="btn my-2 my-sm-0 m-1">panel</button>
                                     </Link>
                                 ) : (
                                     <Link href="/panel/profile">
-                                        <button className="btn btn-secondary my-2 my-sm-0 m-1">
-                                            Profile
-                                        </button>
+                                        <button className="btn my-2 my-sm-0 m-1">Profile</button>
                                     </Link>
                                 )}
-                                <button onClick={onSignOut} className="btn btn-secondary my-2 my-sm-0">
+                                <button onClick={onSignOut} className="btn my-2 my-sm-0">
                                     sign out
                                 </button>
                             </>
                         ) : (
                             <>
                                 <Link href="/login">
-                                    <button className="btn btn-secondary my-2 my-sm-0">login</button>
+                                    <button className="btn my-2 my-sm-0">login</button>
                                 </Link>
                                 <Link href="/register">
-                                    <button className="btn btn-secondary my-2 my-sm-0 m-1">
-                                        register
-                                    </button>
+                                    <button className="btn my-2 my-sm-0 m-1">register</button>
                                 </Link>
                             </>
                         )}
