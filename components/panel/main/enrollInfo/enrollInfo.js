@@ -10,12 +10,15 @@ export default ({ enroll, close, show, modifyEnroll }) => {
                 <Modal.Body>
                     <ul>
                         <li>{`id: ${enroll.id}`}</li>
-                        <li>{`date: ${Date(enroll.date)}`}</li>
+                        <li>{`creation date: ${Date(enroll.createdAt)}`}</li>
+                        {enroll.status === "accepted" && (
+                            <li>{`accept on: ${Date(enroll.acceptedAt)}`}</li>
+                        )}
                         <li>{`name: ${enroll.name}`}</li>
                         <li>{`email: ${enroll.email}`}</li>
                         <li>{`status: ${enroll.status}`}</li>
                         <li>{`grade: ${enroll.grade}`}</li>
-                        <li>{`geoLocation: ${enroll.geoLocation}`}</li>
+                        <li>{`geo location: ${enroll.geoLocation}`}</li>
                         <li>{`timezone: ${enroll.timezone}`}</li>
                         <li>{`service: ${enroll.service}`}</li>
                         <li>{`profInterests: ${enroll.profInterests}`}</li>

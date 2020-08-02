@@ -70,7 +70,7 @@ const ProfilePage = ({ user, authenticated, token }) => {
     };
 
     return (
-        <Layout name={user.username} authenticated={authenticated} profile>
+        <Layout name={user.username} authenticated={authenticated}>
             <Profile
                 passwordChange={passwordChange}
                 setPasswordChange={setPasswordChange}

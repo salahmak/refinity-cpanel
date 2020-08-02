@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Navbar from "../Navbar/Navbar.js";
-const Layout = ({ name, authenticated, profile, children }) => {
+const Layout = ({ name, authenticated, children }) => {
     return (
         <>
             <Head>
@@ -23,7 +23,7 @@ const Layout = ({ name, authenticated, profile, children }) => {
                 ></script>
             </Head>
             <div>
-                <Navbar profile={profile} name={name} authenticated={authenticated} />
+                <Navbar name={name} authenticated={authenticated} />
                 <div className="page-wrapper">{children}</div>
             </div>
         </>

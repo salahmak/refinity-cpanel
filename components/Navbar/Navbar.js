@@ -1,7 +1,7 @@
 import Link from "next/link";
 import onSignOut from "../../utils/signout.js";
 
-export default ({ authenticated, name, profile }) => {
+export default ({ authenticated, name }) => {
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -26,26 +26,28 @@ export default ({ authenticated, name, profile }) => {
                     <div className="my-2 my-lg-0">
                         {authenticated ? (
                             <>
-                                {profile ? (
-                                    <Link href="/panel">
-                                        <button className="btn my-2 my-sm-0 m-1">panel</button>
-                                    </Link>
-                                ) : (
-                                    <Link href="/panel/profile">
-                                        <button className="btn my-2 my-sm-0 m-1">Profile</button>
-                                    </Link>
-                                )}
+                                <Link href="/panel">
+                                    <button className="btn my-2 my-sm-0 m-1">Panel</button>
+                                </Link>
+
+                                <Link href="/panel/profile">
+                                    <button className="btn my-2 my-sm-0 m-1">Profile</button>
+                                </Link>
+
+                                <Link href="/panel/downloads">
+                                    <button className="btn my-2 my-sm-0 m-1">Downloads</button>
+                                </Link>
                                 <button onClick={onSignOut} className="btn my-2 my-sm-0">
-                                    sign out
+                                    Sign out
                                 </button>
                             </>
                         ) : (
                             <>
                                 <Link href="/login">
-                                    <button className="btn my-2 my-sm-0">login</button>
+                                    <button className="btn my-2 my-sm-0">Login</button>
                                 </Link>
                                 <Link href="/register">
-                                    <button className="btn my-2 my-sm-0 m-1">register</button>
+                                    <button className="btn my-2 my-sm-0 m-1">Register</button>
                                 </Link>
                             </>
                         )}
