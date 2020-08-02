@@ -5,7 +5,7 @@ export default ({ enrollsFilter, setEnrollsFilter, emailsFilter, setEmailsFilter
 				<article className="card m-2">
 					<div className="text">
 						<div className="heading">
-							<h3>Downloads data as .csv</h3>
+							<h3>Download data as .csv</h3>
 						</div>
 						<div className="body">
 							<div className="form-inline">
