@@ -8,25 +8,44 @@ function WithAuth(WrappedComponent, type) {
         const [email, setEmail] = useState("");
         const [password, setPassword] = useState("");
 
+        const [alert, setAlert] = useState({ display: false, msg: "", variant: "info" });
+
+        const [loading, setLoading] = useState(false);
+
         const onSubmit = async (e) => {
             e.preventDefault();
-
+            setLoading(true);
+            setAlert({ display: false, msg: "" });
             const valid = ["register", "login"];
             if (!valid.includes(type)) return;
 
             const body = type === "login" ? { email, password } : { username, email, password };
 
-            const res = await fetch(`/api/auth?type=${type}`, {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify(body),
-            });
+            try {
+                const res = await fetch(`/api/auth?type=${type}`, {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify(body),
+                });
 
-            if (res.ok) {
+                const data = await res.json();
+
+                if (!res.ok) {
+                    setAlert({ display: true, msg: data.msg, variant: "danger" });
+                    setLoading(false);
+                    return;
+                }
+                setAlert({
+                    display: true,
+                    msg: "Authenticated succesfully. Redirecting...",
+                    variant: "success",
+                });
                 Router.push("/panel");
+            } catch (e) {
+                console.error(e);
             }
         };
 
@@ -36,6 +55,8 @@ function WithAuth(WrappedComponent, type) {
                 setUsername={setUsername}
                 setEmail={setEmail}
                 setPassword={setPassword}
+                alert={alert}
+                loading={loading}
                 {...props}
             />
         );

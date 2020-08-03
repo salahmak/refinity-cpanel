@@ -1,4 +1,13 @@
-export default ({ enrollsFilter, setEnrollsFilter, emailsFilter, setEmailsFilter, onDownload }) => {
+import Alert from "../alert/alert.js";
+
+export default ({
+	enrollsFilter,
+	setEnrollsFilter,
+	emailsFilter,
+	setEmailsFilter,
+	onDownload,
+	alert,
+}) => {
 	return (
 		<>
 			<div className="downloads-wrapper">
@@ -7,6 +16,7 @@ export default ({ enrollsFilter, setEnrollsFilter, emailsFilter, setEmailsFilter
 						<div className="heading">
 							<h3>Download data as .csv</h3>
 						</div>
+						{alert.display && <Alert alert={alert} />}
 						<div className="body">
 							<div className="form-inline">
 								<div className="form-group"></div>

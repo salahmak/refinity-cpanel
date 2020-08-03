@@ -19,6 +19,9 @@ export default async (req, res) => {
 		path: "/",
 		sameSite: true,
 	};
+
+	if (!resp.ok) return res.status(resp.status).json(await resp.json());
+
 	const token = await resp.json();
 
 	res.setHeader("Set-Cookie", serialize("token", token, options));

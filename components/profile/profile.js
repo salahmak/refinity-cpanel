@@ -1,3 +1,6 @@
+import Alert from "../alert/alert.js";
+import Loading from "../loading/grow.js";
+
 export default ({
 	onEmailSubmit,
 	onPasswordSubmit,
@@ -6,6 +9,9 @@ export default ({
 	setEmailChange,
 	passwordChange,
 	setPasswordChange,
+	alert,
+	emailLoading,
+	passwordLoading,
 }) => {
 	return (
 		<>
@@ -29,6 +35,7 @@ export default ({
 						<div className="heading">
 							<h3>Change email</h3>
 						</div>
+						{alert.display && alert.type === "email" && <Alert alert={alert} />}
 						<div className="body">
 							<form onSubmit={onEmailSubmit} className="form-signin">
 								<div className="input-el">
@@ -76,8 +83,13 @@ export default ({
 										value={emailChange.password}
 									/>
 								</div>
-								<button className="btn btn-lg btn-primary btn-block" type="submit">
-									Confirm Email Change
+								<button
+									style={{ minHeight: "48px" }}
+									disabled={emailLoading || passwordLoading}
+									className="btn btn-lg btn-primary btn-block"
+									type="submit"
+								>
+									{emailLoading ? <Loading /> : "Confirm Email Change"}
 								</button>
 							</form>
 						</div>
@@ -89,6 +101,7 @@ export default ({
 						<div className="heading">
 							<h3>Change Password</h3>
 						</div>
+						{alert.display && alert.type === "password" && <Alert alert={alert} />}
 						<div className="body">
 							<form onSubmit={onPasswordSubmit} className="form-signin">
 								<div className="input-el">
@@ -149,8 +162,17 @@ export default ({
 										value={passwordChange.confirm}
 									/>
 								</div>
-								<button className="btn btn-lg btn-primary btn-block" type="submit">
-									Confirm Password Change
+								<button
+									style={{ minHeight: "48px" }}
+									disabled={
+										emailLoading ||
+										passwordLoading ||
+										passwordChange.new !== passwordChange.confirm
+									}
+									className="btn btn-lg btn-primary btn-block"
+									type="submit"
+								>
+									{passwordLoading ? <Loading /> : "Confirm Password Change"}
 								</button>
 							</form>
 						</div>

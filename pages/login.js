@@ -4,27 +4,37 @@ import Router from "next/router";
 import { auth } from "../utils/auth.js";
 import WithAuth from "../HOCs/withAuth.js";
 
-const LoginPage = ({ onSubmit, setEmail, setPassword }) => {
+const LoginPage = ({ onSubmit, setEmail, setPassword, alert, loading }) => {
     return (
         <Layout>
-            <Login setEmail={setEmail} setPassword={setPassword} onSubmit={onSubmit} />
+            <Login
+                loading={loading}
+                alert={alert}
+                setEmail={setEmail}
+                setPassword={setPassword}
+                onSubmit={onSubmit}
+            />
         </Layout>
     );
 };
 
 export const getServerSideProps = async (ctx) => {
-    const { authenticated, error, user } = await auth(ctx);
-    if (authenticated && !error && user) {
-        if (ctx.res) {
-            ctx.res.writeHead(302, {
-                Location: "/panel",
-            });
-            ctx.res.end();
-        } else {
-            Router.push("/panel");
+    try {
+        const { authenticated, error } = await auth(ctx);
+        if (authenticated && !error) {
+            if (ctx.res) {
+                ctx.res.writeHead(302, {
+                    Location: "/panel",
+                });
+                ctx.res.end();
+            } else {
+                Router.push("/panel");
+            }
         }
+        return { props: {} };
+    } catch {
+        console.log("there was an error while getting initial props for /login");
     }
-    return { props: {} };
 };
 
 export default WithAuth(LoginPage, "login");

@@ -1,10 +1,14 @@
-export default ({ onSubmit, setUsername, setEmail, setPassword }) => {
+import Alert from "../../alert/alert.js";
+import Loading from "../../loading/grow.js";
+
+export default ({ onSubmit, setUsername, setEmail, setPassword, alert, loading }) => {
     return (
         <>
             <div className="login-wrapper">
                 <form onSubmit={onSubmit} className="form-signin">
                     <h1 className="h3 mb-3 text-center font-weight-normal">Register</h1>
-                    <div className="input-el">
+                    {alert.display && <Alert alert={alert} />}
+                    <div className="mb-2">
                         <label htmlFor="inputUsername" className="sr-only">
                             Username
                         </label>
@@ -19,7 +23,7 @@ export default ({ onSubmit, setUsername, setEmail, setPassword }) => {
                             autoFocus=""
                         />
                     </div>
-                    <div className="input-el">
+                    <div className="mb-2">
                         <label htmlFor="inputEmail" className="sr-only">
                             Email address
                         </label>
@@ -31,10 +35,11 @@ export default ({ onSubmit, setUsername, setEmail, setPassword }) => {
                             className="form-control"
                             placeholder="Email address"
                             required
+                            autoComplete="email"
                             autoFocus=""
                         />
                     </div>
-                    <div className="input-el">
+                    <div className="mb-2">
                         <label htmlFor="inputPassword" className="sr-only">
                             Password
                         </label>
@@ -48,8 +53,15 @@ export default ({ onSubmit, setUsername, setEmail, setPassword }) => {
                             required=""
                         />
                     </div>
-                    <button className="btn btn-lg btn-primary btn-block" type="submit">
-                        Register
+                    <button
+                        style={{ minHeight: "48px" }}
+                        className="btn btn-lg btn-primary btn-block"
+                        type="submit"
+                        disabled={loading}
+                    >
+                        <div className="d-flex justify-content-center align-items-center">
+                            {loading ? <Loading /> : <span>Register</span>}
+                        </div>
                     </button>
                 </form>
             </div>
@@ -62,8 +74,8 @@ export default ({ onSubmit, setUsername, setEmail, setPassword }) => {
                     width: 100%;
                     padding: 50px;
                 }
-                .input-el {
-                    margin: 12px;
+                .form-signin {
+                    flex: 0 0 250px;
                 }
             `}</style>
         </>

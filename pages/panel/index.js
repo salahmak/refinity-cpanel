@@ -1,7 +1,9 @@
 import Layout from "../../components/Layout/Layout.js";
 import PanelWrapper from "../../components/panel/panelWrapper.js";
+import ErrorWrapper from "../../components/error/error.js";
 import fetch from "isomorphic-unfetch";
 import getEnrolls from "../../components/fetch/fetch.js";
+import signOut from "../../utils/signout.js";
 import { API } from "../../exports/config.js";
 import { useState } from "react";
 import { auth } from "../../utils/auth.js";
@@ -9,7 +11,7 @@ import Router from "next/router";
 
 const limits = [5, 25, 10];
 
-const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
+const PanelPage = ({ all, pending, accepted, user, authenticated, token, error }) => {
     const [allEnrolls, setAllEnrolls] = useState(all);
     const [pendingEnrolls, setPendingEnrolls] = useState(pending);
     const [acceptedEnrolls, setAcceptedEnrolls] = useState(accepted);
@@ -33,19 +35,19 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
                         },
                     }
                 );
-                const data = await res.json();
-                console.log(data);
-                if (data.list) {
-                    setAllEnrolls({
-                        list: allEnrolls.list.concat(data.list),
-                        totalPages: data.totalPages,
-                        currentPage: data.currentPage,
-                        count: data.count,
-                    });
-                    setAllPage(data.currentPage);
-                } else {
-                    console.log(data);
+                if (!res.ok) {
+                    if (res.status === 401) return signOut("?msg=unautherized");
+                    return console.error(`the server responded with ${res.status}`);
                 }
+                const data = await res.json();
+
+                setAllEnrolls({
+                    list: allEnrolls.list.concat(data.list),
+                    totalPages: data.totalPages,
+                    currentPage: data.currentPage,
+                    count: data.count,
+                });
+                setAllPage(data.currentPage);
             } catch (err) {
                 console.log(err);
             }
@@ -61,16 +63,19 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
                         },
                     }
                 );
-                const data = await res.json();
-                if (data.list) {
-                    setPendingEnrolls({
-                        list: pendingEnrolls.list.concat(data.list),
-                        totalPages: data.totalPages,
-                        currentPage: data.currentPage,
-                        count: data.count,
-                    });
-                    setPendingPage(data.currentPage);
+                if (!res.ok) {
+                    if (res.status === 401) return signOut("?msg=unautherized");
+                    return console.error(`the server responded with ${res.status}`);
                 }
+                const data = await res.json();
+
+                setPendingEnrolls({
+                    list: pendingEnrolls.list.concat(data.list),
+                    totalPages: data.totalPages,
+                    currentPage: data.currentPage,
+                    count: data.count,
+                });
+                setPendingPage(data.currentPage);
             } catch (err) {
                 console.log(err);
             }
@@ -86,16 +91,19 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
                         },
                     }
                 );
-                const data = await res.json();
-                if (data.list) {
-                    setAcceptedEnrolls({
-                        list: acceptedEnrolls.list.concat(data.list),
-                        totalPages: data.totalPages,
-                        currentPage: data.currentPage,
-                        count: data.count,
-                    });
-                    setAcceptedPage(data.currentPage);
+                if (!res.ok) {
+                    if (res.status === 401) return signOut("?msg=unautherized");
+                    return console.error(`the server responded with ${res.status}`);
                 }
+                const data = await res.json();
+
+                setAcceptedEnrolls({
+                    list: acceptedEnrolls.list.concat(data.list),
+                    totalPages: data.totalPages,
+                    currentPage: data.currentPage,
+                    count: data.count,
+                });
+                setAcceptedPage(data.currentPage);
             } catch (err) {
                 console.log(err);
             }
@@ -103,51 +111,78 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token }) => {
     };
 
     const onEnrollAction = async (params) => {
-        const { all, pending, accepted } = await getEnrolls(limits, token);
-        setAllEnrolls(all);
-        setPendingEnrolls(pending);
-        setAcceptedEnrolls(accepted);
+        const { data, fetchError } = await getEnrolls(limits, token);
+
+        if (!data && fetchError) return console.error(fetchError);
+
+        setAllEnrolls(data.all);
+        setPendingEnrolls(data.pending);
+        setAcceptedEnrolls(data.accepted);
     };
 
     return (
         <Layout name={user.username} authenticated={authenticated}>
-            <PanelWrapper
-                onLoadMore={onLoadMore}
-                status={status}
-                setStatus={setStatus}
-                all={allEnrolls}
-                pending={pendingEnrolls}
-                accepted={acceptedEnrolls}
-                onEnrollAction={onEnrollAction}
-                token={token}
-            />
+            {!error ? (
+                <PanelWrapper
+                    onLoadMore={onLoadMore}
+                    status={status}
+                    setStatus={setStatus}
+                    all={allEnrolls}
+                    pending={pendingEnrolls}
+                    accepted={acceptedEnrolls}
+                    onEnrollAction={onEnrollAction}
+                    token={token}
+                />
+            ) : (
+                <ErrorWrapper error={error} />
+            )}
         </Layout>
     );
 };
 
 export const getServerSideProps = async (ctx) => {
-    const { user, error, authenticated, token } = await auth(ctx);
-    if (user && !error) {
-        const { all, pending, accepted } = await getEnrolls(limits, token);
-        return {
-            props: {
-                all,
-                pending,
-                accepted,
-                user,
-                authenticated,
-                token,
-            },
-        };
-    } else {
-        if (ctx.res) {
-            ctx.res.writeHead(302, {
-                Location: "/login",
-            });
-            ctx.res.end();
+    try {
+        const { user, error, authenticated, token } = await auth(ctx);
+        if (!error) {
+            const { data, fetchError } = await getEnrolls(limits, token);
+
+            if (data && !fetchError) {
+                return {
+                    props: {
+                        error: false,
+                        all: data.all,
+                        pending: data.pending,
+                        accepted: data.accepted,
+                        user,
+                        authenticated,
+                        token,
+                    },
+                };
+            } else {
+                return {
+                    props: {
+                        all: { currentPage: 0 },
+                        pending: { currentPage: 0 },
+                        accepted: { currentPage: 0 },
+                        error: fetchError,
+                        user,
+                        authenticated,
+                        token,
+                    },
+                };
+            }
         } else {
-            Router.push("/login");
+            if (ctx.res) {
+                ctx.res.writeHead(302, {
+                    Location: "/login",
+                });
+                ctx.res.end();
+            } else {
+                Router.push("/login");
+            }
         }
+    } catch (e) {
+        console.log("there was an error while getting server side props");
     }
 };
 

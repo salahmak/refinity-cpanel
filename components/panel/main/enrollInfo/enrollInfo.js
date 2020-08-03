@@ -1,6 +1,8 @@
 import Modal from "react-bootstrap/Modal";
+import Alert from "../../../alert/alert.js";
+import Loading from "../../../loading/spinner.js";
 
-export default ({ enroll, close, show, modifyEnroll }) => {
+export default ({ enroll, close, show, modifyEnroll, alert, acceptLoading, deleteLoading }) => {
     return (
         <>
             <Modal show={show} onHide={close} animation={false}>
@@ -8,6 +10,7 @@ export default ({ enroll, close, show, modifyEnroll }) => {
                     <Modal.Title>Enrollment info</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {alert.display && <Alert alert={alert} />}
                     <ul>
                         <li>{`id: ${enroll.id}`}</li>
                         <li>{`creation date: ${Date(enroll.createdAt)}`}</li>
@@ -34,19 +37,22 @@ export default ({ enroll, close, show, modifyEnroll }) => {
                         Close
                     </button>
                     <button
+                        disabled={acceptLoading || deleteLoading}
+                        style={{ minHeight: "38px" }}
                         onClick={() => modifyEnroll("delete", "delete", enroll.id)}
                         type="button"
                         className="btn btn-danger"
                     >
-                        Delete
+                        {deleteLoading ? <Loading /> : "Delete"}
                     </button>
                     <button
-                        disabled={enroll.status === "accepted"}
+                        style={{ minHeight: "38px" }}
+                        disabled={enroll.status === "accepted" || acceptLoading || deleteLoading}
                         onClick={() => modifyEnroll("accept", "put", enroll.id)}
                         type="button"
                         className="btn btn-primary"
                     >
-                        Accept
+                        {acceptLoading ? <Loading /> : "Accept"}
                     </button>
                 </Modal.Footer>
             </Modal>

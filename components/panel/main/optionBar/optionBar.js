@@ -1,3 +1,5 @@
+import Loading from "../../../loading/grow.js";
+
 export default ({
     onModeChange,
     mode,
@@ -6,6 +8,7 @@ export default ({
     searchFilter,
     setSearchFilter,
     onSearch,
+    loading,
 }) => {
     return (
         <>
@@ -42,8 +45,13 @@ export default ({
                                 <option>name</option>
                                 <option>email</option>
                             </select>
-                            <button onClick={onSearch} className="btn btn-primary">
-                                Search
+                            <button
+                                style={{ minHeight: "38px" }}
+                                onClick={onSearch}
+                                className="btn btn-primary"
+                                disabled={loading}
+                            >
+                                {loading ? <Loading /> : "Search"}
                             </button>
                         </div>
                     )}
