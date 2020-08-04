@@ -17,7 +17,6 @@ export default async (req, res) => {
 		maxAge: 432000,
 		secure: process.env.NODE_ENV === "production",
 		path: "/",
-		sameSite: true,
 	};
 
 	if (!resp.ok) return res.status(resp.status).json(await resp.json());

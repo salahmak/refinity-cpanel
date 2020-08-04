@@ -5,10 +5,11 @@ export default ({ searchArr, openEnrollInfo, alert }) => {
     return (
         <div>
             <div className="card-wrapper">
-                {searchArr.map((enroll, i) => {
-                    return <Card key={i} openEnrollInfo={openEnrollInfo} enroll={enroll} />;
-                })}
                 {searchArr.length === 0 && alert.display && <Alert alert={alert} />}
+                {searchArr.length !== 0 &&
+                    searchArr.map((enroll, i) => {
+                        return <Card key={i} openEnrollInfo={openEnrollInfo} enroll={enroll} />;
+                    })}
             </div>
             <style jsx>{`
                 .card-wrapper {

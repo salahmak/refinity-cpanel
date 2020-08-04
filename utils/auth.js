@@ -1,5 +1,6 @@
 import { API } from "../exports/config.js";
 import cookies from "next-cookies";
+import Router from "next/router";
 
 const auth = async (ctx) => {
     const { token } = cookies(ctx);

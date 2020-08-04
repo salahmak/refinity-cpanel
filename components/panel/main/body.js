@@ -65,6 +65,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
                 const data = await res.json();
                 if (!res.ok) {
                     if (res.status === 401) return signOut("?msg=unautherized");
+                    setSearchArr([]);
                     setSearchAlert({ display: true, msg: data.msg, variant: "info" });
                     setSearchLoading(false);
                     return;
