@@ -119,7 +119,7 @@ const ProfilePage = ({ user, authenticated, token }) => {
     };
 
     return (
-        <Layout name={user.username} authenticated={authenticated}>
+        <Layout title="Refinity panel | Profile" name={user.username} authenticated={authenticated}>
             <Profile
                 passwordChange={passwordChange}
                 setPasswordChange={setPasswordChange}

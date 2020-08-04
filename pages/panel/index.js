@@ -121,7 +121,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token, error }
     };
 
     return (
-        <Layout name={user.username} authenticated={authenticated}>
+        <Layout title="Refinity panel" name={user.username} authenticated={authenticated}>
             {!error ? (
                 <PanelWrapper
                     onLoadMore={onLoadMore}

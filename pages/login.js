@@ -6,7 +6,7 @@ import WithAuth from "../HOCs/withAuth.js";
 
 const LoginPage = ({ onSubmit, setEmail, setPassword, alert, loading }) => {
     return (
-        <Layout>
+        <Layout title="Refinity panel | login">
             <Login
                 loading={loading}
                 alert={alert}

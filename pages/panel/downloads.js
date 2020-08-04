@@ -33,7 +33,7 @@ const DownloadsPage = ({ user, authenticated, token }) => {
     };
 
     return (
-        <Layout name={user.username} authenticated={authenticated}>
+        <Layout title="Refinity panel | downloads" name={user.username} authenticated={authenticated}>
             <Downloads
                 enrollsFilter={enrollsFilter}
                 setEnrollsFilter={setEnrollsFilter}

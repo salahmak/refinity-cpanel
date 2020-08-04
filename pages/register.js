@@ -6,7 +6,7 @@ import WithAuth from "../HOCs/withAuth.js";
 
 const RegisterPage = ({ onSubmit, setUsername, setEmail, setPassword, alert, loading }) => {
     return (
-        <Layout>
+        <Layout title="Refinity panel | register">
             <Register
                 setUsername={setUsername}
                 setEmail={setEmail}
