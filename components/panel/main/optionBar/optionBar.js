@@ -16,7 +16,7 @@ export default ({
                 <div className="form-inline">
                     <div className="form-group">
                         <div className="switch-wrapper">
-                            <span>Search mode</span>
+                            <span className="text-dark">Search mode</span>
                             <div className="custom-control custom-switch">
                                 <input
                                     type="checkbox"

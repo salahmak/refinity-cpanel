@@ -64,7 +64,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
                 );
                 const data = await res.json();
                 if (!res.ok) {
-                    if (res.status === 401) return signOut("?msg=unautherized");
+                    if (res.status === 401) return signOut("session=expired");
                     setSearchArr([]);
                     setSearchAlert({ display: true, msg: data.msg, variant: "info" });
                     setSearchLoading(false);
@@ -74,6 +74,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
                 setSearchArr(data.list);
             } catch (err) {
                 setSearchLoading(false);
+                setSearchAlert({ display: true, msg: err.message, variant: "danger" });
                 console.error(err);
             }
         }
@@ -94,7 +95,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
                 },
             });
             if (!res.ok) {
-                if (res.status === 401) return signOut("?msg=unautherized");
+                if (res.status === 401) return signOut("session=expired");
 
                 const data = await res.json();
                 setAlert({ display: true, msg: data.msg });
@@ -111,7 +112,9 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
             setShowInfo(false);
             setCurrentEnroll({});
         } catch (err) {
-            console.error(err);
+            setAlert({ display: true, msg: err.message });
+            setAcceptLoading(false);
+            setDeleteLoading(false);
         }
     };
 

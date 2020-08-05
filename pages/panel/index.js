@@ -36,7 +36,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token, error }
                     }
                 );
                 if (!res.ok) {
-                    if (res.status === 401) return signOut("?msg=unautherized");
+                    if (res.status === 401) return signOut("session=expired");
                     return console.error(`the server responded with ${res.status}`);
                 }
                 const data = await res.json();
@@ -64,7 +64,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token, error }
                     }
                 );
                 if (!res.ok) {
-                    if (res.status === 401) return signOut("?msg=unautherized");
+                    if (res.status === 401) return signOut("session=expired");
                     return console.error(`the server responded with ${res.status}`);
                 }
                 const data = await res.json();
@@ -92,7 +92,7 @@ const PanelPage = ({ all, pending, accepted, user, authenticated, token, error }
                     }
                 );
                 if (!res.ok) {
-                    if (res.status === 401) return signOut("?msg=unautherized");
+                    if (res.status === 401) return signOut("session=expired");
                     return console.error(`the server responded with ${res.status}`);
                 }
                 const data = await res.json();

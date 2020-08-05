@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import queryString from "query-string";
 
 function WithAuth(WrappedComponent, type) {
     return (props) => {
@@ -11,6 +12,22 @@ function WithAuth(WrappedComponent, type) {
         const [alert, setAlert] = useState({ display: false, msg: "", variant: "info" });
 
         const [loading, setLoading] = useState(false);
+
+        useEffect(() => {
+            if (!location.search) return;
+
+            const queryObj = queryString.parse(location.search);
+            console.log("obj", queryObj);
+
+            if (!!queryObj.session && queryObj.session === "expired") {
+                setAlert({
+                    display: true,
+                    msg: "Your session had expired. Please login again to renew it",
+                });
+            } else {
+                return;
+            }
+        }, []);
 
         const onSubmit = async (e) => {
             e.preventDefault();

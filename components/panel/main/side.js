@@ -2,70 +2,52 @@ export default ({ status, setStatus, all, pending, accepted }) => {
     return (
         <>
             <div className="sidenav">
-                <div className="side-wrapper">
-                    <p>- Enrollments</p>
-                    <div className="side-opt-wrapper">
-                        <span
-                            className={status === "all" ? "active-tab" : "opt"}
-                            onClick={() => setStatus("all")}
-                        >
-                            {`-all   ${all}`}
-                        </span>
-
-                        <span
-                            className={status === "pending" ? "active-tab" : "opt"}
-                            onClick={() => setStatus("pending")}
-                        >
-                            {`-pending   ${pending}`}
-                        </span>
-
-                        <span
-                            className={status === "accepted" ? "active-tab" : "opt"}
-                            onClick={() => setStatus("accepted")}
-                        >
-                            {`-accepted   ${accepted}`}
-                        </span>
-                    </div>
+                <div>
+                    <button
+                        onClick={() => setStatus("all")}
+                        type="button"
+                        className={`btn btn-${status === "all" ? "primary" : "light"} select-item`}
+                    >
+                        All <span className="badge badge-secondary">{all}</span>
+                    </button>
+                    <hr />
+                    <button
+                        onClick={() => setStatus("pending")}
+                        type="button"
+                        className={`btn btn-${status === "pending" ? "primary" : "light"} select-item`}
+                    >
+                        Pending <span className="badge badge-secondary">{pending}</span>
+                    </button>
+                    <hr />
+                    <button
+                        onClick={() => setStatus("accepted")}
+                        type="button"
+                        className={`btn btn-${status === "accepted" ? "primary" : "light"} select-item`}
+                    >
+                        Accepted <span className="badge badge-secondary">{accepted}</span>
+                    </button>
                 </div>
             </div>
+
             <style jsx>{`
-                .side-wrapper {
-                    padding: 8px 16px;
-                    color: black;
-                }
-
-                .side-wrapper p {
-                    font-size: 25px;
-                    display: block;
-                }
-
-                .side-opt-wrapper {
-                    padding-left: 20px;
-                }
-
-                .opt {
-                    font-size: 18px;
-                    display: block;
-                    cursor: pointer;
-                }
-
                 .sidenav {
                     width: 210px;
                     border-right: 1px solid black;
                     overflow-x: hidden;
-                    padding-top: 20px;
+                    padding-top: 80px;
                 }
 
-                .active-tab {
-                    font-size: 18px;
-                    border: 1px solid black;
-                    display: block;
-                    cursor: pointer;
+                .select-item {
+                    margin: 0px 10px;
                 }
 
-                @media screen and (max-height: 450px) {
+                @media screen and (max-height: 765px) {
                     .sidenav {
-                        padding-top: 15px;
+                        padding-top: 100px;
+                    }
+                    .select-item {
+                        font-size: 14px;
+                        margin: 0px 5px;
                     }
                 }
             `}</style>

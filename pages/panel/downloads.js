@@ -23,7 +23,7 @@ const DownloadsPage = ({ user, authenticated, token }) => {
             },
         });
         if (!res.ok) {
-            if (res.status === 401) return signOut("?msg=unautherized");
+            if (res.status === 401) return signOut("session=expired");
             const data = await res.json();
             return setAlert({ display: true, msg: data.msg });
         }
