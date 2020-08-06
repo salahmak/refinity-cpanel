@@ -1,6 +1,6 @@
 import Body from "./main/body.js";
 import Side from "./main/side.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PanelWrapper = ({
     all,
@@ -13,6 +13,10 @@ const PanelWrapper = ({
     token,
 }) => {
     const enrolls = { all, pending, accepted };
+
+    useEffect(() => {
+        if (window.innerWidth <= 765) setSide(false);
+    }, []);
 
     const [side, setSide] = useState(true);
 

@@ -3,29 +3,35 @@ export default ({ status, setStatus, all, pending, accepted }) => {
         <>
             <div className="sidenav">
                 <div>
-                    <button
-                        onClick={() => setStatus("all")}
-                        type="button"
-                        className={`btn btn-${status === "all" ? "primary" : "light"} select-item`}
-                    >
-                        All <span className="badge badge-secondary">{all}</span>
-                    </button>
+                    <div className="select-item">
+                        <button
+                            onClick={() => setStatus("all")}
+                            type="button"
+                            className={`btn btn-${status === "all" ? "primary" : "light"}`}
+                        >
+                            All <span className="badge badge-secondary">{all}</span>
+                        </button>
+                    </div>
                     <hr />
-                    <button
-                        onClick={() => setStatus("pending")}
-                        type="button"
-                        className={`btn btn-${status === "pending" ? "primary" : "light"} select-item`}
-                    >
-                        Pending <span className="badge badge-secondary">{pending}</span>
-                    </button>
+                    <div className="select-item">
+                        <button
+                            onClick={() => setStatus("pending")}
+                            type="button"
+                            className={`btn btn-${status === "pending" ? "primary" : "light"}`}
+                        >
+                            Pending <span className="badge badge-secondary">{pending}</span>
+                        </button>
+                    </div>
                     <hr />
-                    <button
-                        onClick={() => setStatus("accepted")}
-                        type="button"
-                        className={`btn btn-${status === "accepted" ? "primary" : "light"} select-item`}
-                    >
-                        Accepted <span className="badge badge-secondary">{accepted}</span>
-                    </button>
+                    <div className="select-item">
+                        <button
+                            onClick={() => setStatus("accepted")}
+                            type="button"
+                            className={`btn btn-${status === "accepted" ? "primary" : "light"}`}
+                        >
+                            Accepted <span className="badge badge-secondary">{accepted}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -38,16 +44,19 @@ export default ({ status, setStatus, all, pending, accepted }) => {
                 }
 
                 .select-item {
-                    margin: 0px 10px;
+                    width: 100%;
+                    padding: 0 20px;
                 }
 
-                @media screen and (max-height: 765px) {
+                @media screen and (max-width: 765px) {
                     .sidenav {
                         padding-top: 100px;
                     }
                     .select-item {
+                        padding: 0 5px;
+                    }
+                    .select-item > button {
                         font-size: 14px;
-                        margin: 0px 5px;
                     }
                 }
             `}</style>

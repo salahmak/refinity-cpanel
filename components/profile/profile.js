@@ -24,7 +24,7 @@ export default ({
 						<div className="body">
 							<span className="p-1">username: {`${user.username}`}</span>
 							<span className="p-1">email: {`${user.email}`}</span>
-							<span className="p-1">admin since: {`${Date(user.date)}`}</span>
+							<span className="p-1">admin since: {`${new Date(user.date)}`}</span>
 							<span className="p-1">accepted enrolls: {`${user.acceptedEnrolls}`}</span>
 							<span className="p-1">deleted enrolls: {`${user.deletedEnrolls}`}</span>
 						</div>
