@@ -7,7 +7,7 @@ import LoadBtn from "./loadBtn/loadBtn.js";
 import { API } from "../../../exports/config.js";
 import { useState } from "react";
 
-const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
+const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token, side, setSide }) => {
     const [showInfo, setShowInfo] = useState(false);
 
     const [currentEnroll, setCurrentEnroll] = useState({});
@@ -132,6 +132,8 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token }) => {
                     onModeChange={onModeChange}
                     onSearch={onSearch}
                     loading={searchLoading}
+                    side={side}
+                    setSide={setSide}
                 />
                 {mode === "browse" && (
                     <Browse openEnrollInfo={openEnrollInfo} enrolls={enrolls} status={status} />

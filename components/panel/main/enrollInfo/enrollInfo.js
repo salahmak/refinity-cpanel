@@ -5,7 +5,7 @@ import Loading from "../../../loading/spinner.js";
 export default ({ enroll, close, show, modifyEnroll, alert, acceptLoading, deleteLoading }) => {
     return (
         <>
-            <Modal show={show} onHide={close} animation={false}>
+            <Modal size="lg" show={show} onHide={close} animation={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>Enrollment info</Modal.Title>
                 </Modal.Header>
@@ -13,9 +13,9 @@ export default ({ enroll, close, show, modifyEnroll, alert, acceptLoading, delet
                     {alert.display && <Alert alert={alert} />}
                     <ul>
                         <li>{`id: ${enroll.id}`}</li>
-                        <li>{`creation date: ${Date(enroll.createdAt)}`}</li>
+                        <li>{`created on: ${new Date(enroll.createdAt)}`}</li>
                         {enroll.status === "accepted" && (
-                            <li>{`accept on: ${Date(enroll.acceptedAt)}`}</li>
+                            <li>{`accepted on: ${new Date(enroll.acceptedAt)}`}</li>
                         )}
                         <li>{`name: ${enroll.name}`}</li>
                         <li>{`email: ${enroll.email}`}</li>

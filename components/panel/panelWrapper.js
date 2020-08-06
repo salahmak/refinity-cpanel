@@ -1,5 +1,6 @@
 import Body from "./main/body.js";
 import Side from "./main/side.js";
+import { useState } from "react";
 
 const PanelWrapper = ({
     all,
@@ -12,18 +13,25 @@ const PanelWrapper = ({
     token,
 }) => {
     const enrolls = { all, pending, accepted };
+
+    const [side, setSide] = useState(true);
+
     return (
         <>
             <div className="panel-wrapper">
-                <Side
-                    all={all.count}
-                    pending={pending.count}
-                    accepted={accepted.count}
-                    setStatus={setStatus}
-                    status={status}
-                    className="panel-side"
-                />
+                {side && (
+                    <Side
+                        all={all.count}
+                        pending={pending.count}
+                        accepted={accepted.count}
+                        setStatus={setStatus}
+                        status={status}
+                        className="panel-side"
+                    />
+                )}
                 <Body
+                    side={side}
+                    setSide={setSide}
                     status={status}
                     enrolls={enrolls}
                     onLoadMore={onLoadMore}
