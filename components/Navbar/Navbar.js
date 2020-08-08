@@ -1,7 +1,7 @@
 import Link from "next/link";
 import onSignOut from "../../utils/signout.js";
 
-export default ({ authenticated, name }) => {
+export default ({ authenticated, name, token }) => {
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -37,7 +37,10 @@ export default ({ authenticated, name }) => {
                                 <Link href="/panel/downloads">
                                     <button className="btn my-2 my-sm-0 m-1">Downloads</button>
                                 </Link>
-                                <button onClick={() => onSignOut()} className="btn my-2 my-sm-0">
+                                <button
+                                    onClick={() => onSignOut("", token)}
+                                    className="btn my-2 my-sm-0"
+                                >
                                     Sign out
                                 </button>
                             </>

@@ -64,7 +64,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token, side, setSid
                 );
                 const data = await res.json();
                 if (!res.ok) {
-                    if (res.status === 401) return signOut("session=expired");
+                    if (res.status === 401) return signOut("session=expired", token);
                     setSearchArr([]);
                     setSearchAlert({ display: true, msg: data.msg, variant: "info" });
                     setSearchLoading(false);
@@ -95,7 +95,7 @@ const Body = ({ enrolls, status, onLoadMore, onEnrollAction, token, side, setSid
                 },
             });
             if (!res.ok) {
-                if (res.status === 401) return signOut("session=expired");
+                if (res.status === 401) return signOut("session=expired", token);
 
                 const data = await res.json();
                 setAlert({ display: true, msg: data.msg });

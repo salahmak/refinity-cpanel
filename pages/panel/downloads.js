@@ -23,7 +23,7 @@ const DownloadsPage = ({ user, authenticated, token }) => {
             },
         });
         if (!res.ok) {
-            if (res.status === 401) return signOut("session=expired");
+            if (res.status === 401) return signOut("session=expired", token);
             const data = await res.json();
             return setAlert({ display: true, msg: data.msg });
         }
@@ -33,7 +33,12 @@ const DownloadsPage = ({ user, authenticated, token }) => {
     };
 
     return (
-        <Layout title="Refinity panel | downloads" name={user.username} authenticated={authenticated}>
+        <Layout
+            token={token}
+            title="Refinity panel | downloads"
+            name={user.username}
+            authenticated={authenticated}
+        >
             <Downloads
                 enrollsFilter={enrollsFilter}
                 setEnrollsFilter={setEnrollsFilter}

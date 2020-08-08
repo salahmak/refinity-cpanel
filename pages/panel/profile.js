@@ -54,7 +54,7 @@ const ProfilePage = ({ user, authenticated, token }) => {
             }),
         });
         if (!res.ok) {
-            if (res.status === 401) return signOut("session=expired");
+            if (res.status === 401) return signOut("session=expired", token);
             const data = await res.json();
             setAlert({ display: true, msg: data.msg, type: "email" });
             setEmailLoading(false);
@@ -100,7 +100,7 @@ const ProfilePage = ({ user, authenticated, token }) => {
             }),
         });
         if (!res.ok) {
-            if (res.status === 401) return signOut("session=expired");
+            if (res.status === 401) return signOut("session=expired", token);
             const data = await res.json();
             setAlert({ display: true, msg: data.msg, type: "password" });
             setPasswordLoading(false);
@@ -119,7 +119,12 @@ const ProfilePage = ({ user, authenticated, token }) => {
     };
 
     return (
-        <Layout title="Refinity panel | Profile" name={user.username} authenticated={authenticated}>
+        <Layout
+            token={token}
+            title="Refinity panel | Profile"
+            name={user.username}
+            authenticated={authenticated}
+        >
             <Profile
                 passwordChange={passwordChange}
                 setPasswordChange={setPasswordChange}

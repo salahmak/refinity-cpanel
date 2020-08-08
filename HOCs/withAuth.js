@@ -17,7 +17,6 @@ function WithAuth(WrappedComponent, type) {
             if (!location.search) return;
 
             const queryObj = queryString.parse(location.search);
-            console.log("obj", queryObj);
 
             if (!!queryObj.session && queryObj.session === "expired") {
                 setAlert({
