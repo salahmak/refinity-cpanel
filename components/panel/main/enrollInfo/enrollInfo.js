@@ -17,15 +17,24 @@ export default ({ enroll, close, show, modifyEnroll, alert, acceptLoading, delet
                         {enroll.status === "accepted" && (
                             <li>{`accepted on: ${new Date(enroll.acceptedAt)}`}</li>
                         )}
+                        <li>{`type: ${enroll.type}`}</li>
                         <li>{`name: ${enroll.name}`}</li>
                         <li>{`email: ${enroll.email}`}</li>
                         <li>{`status: ${enroll.status}`}</li>
                         <li>{`grade: ${enroll.grade}`}</li>
-                        <li>{`geo location: ${enroll.geoLocation}`}</li>
+                        <li>{`country: ${enroll.geoLocation}`}</li>
                         <li>{`timezone: ${enroll.timezone}`}</li>
                         <li>{`service: ${enroll.service}`}</li>
-                        <li>{`profInterests: ${enroll.profInterests}`}</li>
-                        <li>{`funFact: ${enroll.funFact}`}</li>
+                        <li>{`professional Interests: ${enroll.profInterests}`}</li>
+                        <li>{`fun fact: ${enroll.funFact}`}</li>
+                        {enroll.type === "tutor" && (
+                            <li>
+                                score report:{" "}
+                                <a target="_blank" href={`${enroll.scoreReport}`}>
+                                    view score report
+                                </a>
+                            </li>
+                        )}
                         <li>{`subscribed to email list: ${enroll.emailList}`}</li>
                         <li>{`subscibed to tutoring emails: ${enroll.tutoringMails}`}</li>
                         <li>{`subscribed to academic/Svs emails: ${enroll.academicSvsMails}`}</li>

@@ -1,8 +1,7 @@
 import Layout from "../../components/Layout/Layout.js";
 import PanelWrapper from "../../components/panel/panelWrapper.js";
 import ErrorWrapper from "../../components/error/error.js";
-import fetch from "isomorphic-unfetch";
-import getEnrolls from "../../components/fetch/fetch.js";
+import getEnrolls from "../../utils/fetchEnrolls.js";
 import signOut from "../../utils/signout.js";
 import { API } from "../../exports/config.js";
 import { useState } from "react";

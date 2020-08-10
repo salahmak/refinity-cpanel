@@ -1,4 +1,4 @@
-import { API } from "../../exports/config.js";
+import { API } from "../exports/config.js";
 
 export default async (limits, token) => {
     const options = {
