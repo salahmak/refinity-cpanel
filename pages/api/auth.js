@@ -26,7 +26,8 @@ export default async (req, res) => {
 
 		res.setHeader("Set-Cookie", serialize("token", token, options));
 		res.json({ msg: "ok" });
-	} catch {
+	} catch(e) {
 		res.status(500).json({ msg: "there was an error while authenticating" });
+		console.log(e)
 	}
 };
